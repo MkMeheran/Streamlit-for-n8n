@@ -55,7 +55,7 @@ if prompt := st.chat_input("Ask about data, maps or urban planning..."):
         st.markdown(prompt)
 
     with st.chat_message("assistant"):
-        webhook_url = "https://meheran.loseyourip.com/webhook/9664f55f-56d9-4b2f-ab20-faec93bb7f29"
+        webhook_url = "https://meheran.loseyourip.com/webhook-test/9664f55f-56d9-4b2f-ab20-faec93bb7f29"
         
         try:
             with st.spinner("Processing Data..."):
