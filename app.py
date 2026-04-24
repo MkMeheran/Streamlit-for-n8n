@@ -59,7 +59,12 @@ if prompt := st.chat_input("Ask about data, maps or urban planning..."):
         
         try:
             with st.spinner("Processing Data..."):
-                response = requests.post(webhook_url, json={"chatInput": prompt}, timeout=1200)
+                # আগের লাইন:
+# response = requests.post(webhook_url, json={"chatInput": prompt}, timeout=600)
+
+# নতুন আপডেট করা লাইন:
+headers = {"Bypass-Tunnel-Reminder": "true", "User-Agent": "Mozilla/5.0"}
+response = requests.post(webhook_url, json={"chatInput": prompt}, headers=headers, timeout=1200)
                 
             if response.status_code == 200:
                 res_data = response.json()
