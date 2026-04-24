@@ -59,7 +59,7 @@ if prompt := st.chat_input("Ask about data, maps or urban planning..."):
         
         try:
             with st.spinner("Processing Data..."):
-                response = requests.post(webhook_url, json={"chatInput": prompt}, timeout=120)
+                response = requests.post(webhook_url, json={"chatInput": prompt}, timeout=1200)
                 
             if response.status_code == 200:
                 res_data = response.json()
