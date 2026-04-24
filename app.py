@@ -54,26 +54,28 @@ if prompt := st.chat_input("Ask about data, maps or urban planning..."):
     with st.chat_message("user"):
         st.markdown(prompt)
 
+   if prompt := st.chat_input("Ask me about maps, charts or planning..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
     with st.chat_message("assistant"):
+        # আপনার প্রোডাকশন URL
         webhook_url = "https://meheran.loseyourip.com/webhook/9664f55f-56d9-4b2f-ab20-faec93bb7f29"
         
         try:
             with st.spinner("Processing Data..."):
-                # আগের লাইন:
-# response = requests.post(webhook_url, json={"chatInput": prompt}, timeout=600)
-
-# নতুন আপডেট করা লাইন:
-headers = {"Bypass-Tunnel-Reminder": "true", "User-Agent": "Mozilla/5.0"}
-response = requests.post(webhook_url, json={"chatInput": prompt}, headers=headers, timeout=1200)
-                
+                # এখানে ইনডেন্টেশন (স্পেস) একদম ঠিক করা আছে
+                headers = {"Bypass-Tunnel-Reminder": "true", "User-Agent": "Mozilla/5.0"}
+                response = requests.post(webhook_url, json={"chatInput": prompt}, headers=headers, timeout=1200)
+            
             if response.status_code == 200:
                 res_data = response.json()
                 full_response = res_data.get("output", res_data.get("finalReply", "No response."))
-                
-                # স্মার্ট রেন্ডারিং কল
                 smart_render(full_response)
                 st.session_state.messages.append({"role": "assistant", "content": full_response})
             else:
-                st.error("Server Error!")
+                st.error(f"Server Error: {response.status_code} - Could not connect.")
+                
         except Exception as e:
-            st.error(f"Connection Error: {e}")
+            st.error(f"Error: {e}")
